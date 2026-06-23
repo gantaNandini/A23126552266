@@ -1,28 +1,69 @@
 # Campus Evaluation Backend
 
-This repository contains the backend services developed as part of the Affordmed Campus Evaluation.
+Backend services developed as part of the **Affordmed Campus Evaluation** program.
 
-## Project Structure
+## Repository Structure
 
-### logging-middleware
-
-A reusable logging module used across the backend services. It sends structured logs to the Affordmed logging API and helps track application events and errors consistently.
-
-### vehicle-scheduler-be
-
-A Node.js and Express based microservice that fetches depot and vehicle data from the Affordmed Evaluation APIs and generates an optimized maintenance schedule.
-
-The service determines the best set of vehicles to service for each depot while ensuring the total maintenance duration stays within the available mechanic hours.
-
-## API Endpoint
-
-### Get Optimized Schedule
-
-```http
-GET /schedule
+```
+Campus-Evaluation-BE/
+├── vehicle-scheduler-be/        # Optimized vehicle maintenance scheduler
+├── notification-app-be/         # Notification delivery service
+├── logging-middleware/          # Reusable logging module
+├── notification-system-design.md
+└── README.md
 ```
 
-### Sample Response
+---
+
+## Services
+
+### 🚗 vehicle-scheduler-be
+
+A Node.js + Express microservice that fetches depot and vehicle data from the Affordmed Evaluation APIs and generates an optimized maintenance schedule using a **0/1 Knapsack dynamic programming** algorithm.
+
+- **Endpoint:** `GET /schedule`
+- **Algorithm:** Knapsack DP — maximizes total impact within each depot's mechanic-hour capacity
+- **Stack:** Node.js, Express.js, Axios
+
+[View README →](./vehicle-scheduler-be/README.md)
+
+---
+
+### 🔔 notification-app-be
+
+Backend service for managing and delivering notifications triggered by platform events such as schedule completions and errors.
+
+- Supports email and in-app notification channels
+- Designed as a decoupled microservice
+
+[View README →](./notification-app-be/README.md)  
+[View System Design →](./notification-system-design.md)
+
+---
+
+### 📋 logging-middleware
+
+A reusable logging module that sends structured log entries to the Affordmed Logging API. Integrated across all backend services for consistent event and error tracking.
+
+[View README →](./logging-middleware/README.md)
+
+---
+
+## Quick Start
+
+### Vehicle Scheduler
+
+```bash
+cd vehicle-scheduler-be
+npm install
+node server.js
+```
+
+API available at: `http://localhost:3000/schedule`
+
+---
+
+## Sample API Response
 
 ```json
 [
@@ -32,7 +73,7 @@ GET /schedule
     "totalImpact": 141,
     "selectedVehicles": [
       {
-        "TaskID": "...",
+        "TaskID": "abc123",
         "Duration": 7,
         "Impact": 5
       }
@@ -41,51 +82,30 @@ GET /schedule
 ]
 ```
 
-## Installation
-
-Clone the repository and install dependencies:
-
-```bash
-cd vehicle-scheduler-be
-npm install
-```
-
-Start the server:
-
-```bash
-node server.js
-```
-
-The application will run on:
-
-```bash
-http://localhost:3000
-```
-
-## Technologies Used
-
-* Node.js
-* Express.js
-* Axios
-* JavaScript
-* REST APIs
+---
 
 ## Screenshots
 
-The repository includes screenshots showing:
+The `screenshots/` folder contains:
+- Successful API execution output in Postman
+- Optimized scheduling results
 
-* Project folder structure
-* Successful API execution in Postman
-* Optimized scheduling output
+---
 
-## Notes
+## Technologies Used
 
-* Protected Affordmed APIs were accessed using Bearer Token authentication.
-* Vehicle scheduling was implemented using an optimization approach to maximize total impact within the mechanic-hours constraint.
-* Logging integration was reused from the logging middleware developed in the previous stage.
+- Node.js
+- Express.js
+- Axios
+- JavaScript (CommonJS)
+- REST APIs
+- Dynamic Programming (0/1 Knapsack)
+
+---
 
 ## Author
 
-Nandini Ganta
-
-Roll Number: A23126552266
+**Nandini Ganta**  
+Roll Number: A23126552266  
+Email: gantanandini.23.csm@anits.edu.in  
+Institution: ANITS (Anil Neerukonda Institute of Technology and Sciences)
